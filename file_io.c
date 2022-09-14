@@ -19,7 +19,7 @@ void setFileNames(char **file_names, int argc, char *argv[])
             p++;
         *p = 0;
     }
-    else // open each file from argv
+    else // copy each file from argv
     {
         for (int i = 0; i < argc - 1; ++i)
         {
@@ -127,7 +127,6 @@ int nextLineLength(FILE *fp)
     return count;
 }
 
-
 void writeFormattedFile(char *name, Line *lines, int num_lines)
 {
     FILE *fp = fopen(name, "w");
@@ -148,4 +147,3 @@ void writeFormattedFile(char *name, Line *lines, int num_lines)
 
     fclose(fp);
 }
-
