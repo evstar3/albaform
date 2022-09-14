@@ -58,10 +58,7 @@ void formatFile(char *name)
             num_lines++;
 
         if (c == EOF)
-        {
-            num_lines++;
             break;
-        }
     }
 
     // return file pointer to start
