@@ -23,6 +23,7 @@ Line parseLine(char *line)
     // copy content
     while (*r)
     {
+        // stop copying when comment is reached
         if (*r == '/' && *(r + 1) == '/')
             break;
 
@@ -32,8 +33,10 @@ Line parseLine(char *line)
     }
     *w = 0;
 
+    // move past comment indicator "//"
+    r += 2; 
+
     // copy comment
-    r += 2; // move past comment indicator
     w = parsed.comment;
     while (*r)
     {
@@ -58,13 +61,15 @@ Line parseLine(char *line)
     {
         parsed.comment = realloc(parsed.comment, (strlen(parsed.comment) + 2) * sizeof(char));
 
-        // remove newline
+        // move to the end
         r = parsed.comment;
         while (*r)
             r++;
 
+        // start writing one after the read pointer
         w = r + 1;
 
+        // copy all of the comment
         while (r >= parsed.comment)
         {
             *w = *r;
@@ -72,6 +77,7 @@ Line parseLine(char *line)
             w--;
         }
 
+        // the final character is the space we want to add
         *w = ' ';
     }
 
@@ -127,6 +133,7 @@ bool isLabel(char *line)
     if (line[0] == '.')
         return true;
 
+    // check for colon character
     for (char *p = line; *p; p++)
         if (*p == ':')
             return true;
