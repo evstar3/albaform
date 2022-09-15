@@ -1,15 +1,14 @@
 CC=gcc
-CFLAGS=-std=c11 -O3 -Wall
+CFLAGS = -std=c11 -O3 -Wall
+objects = line.o file_io.o
 
-albaform: albaform.c line.o file_io.o
-	$(CC) $(CFLAGS) albaform.c line.o file_io.o -o albaform
+albaform: albaform.c $(objects)
+	$(CC) $(CFLAGS) albaform.c $(objects) -o $@
 
-line.o: line.c line.h
-	$(CC) $(CFLAGS) -c line.c -o line.o
+$(objects): %.o: %.c %.h
+	$(CC) $(CFLAGS) -c $< -o $@
 
-file_io.o: file_io.c file_io.h
-	$(CC) $(CFLAGS) -c file_io.c -o file_io.o
-
+.PHONY : clean
 clean:
 	rm *.o
 	rm albaform
